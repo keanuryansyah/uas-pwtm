@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --col-grey: #363f48;
+    --col-orange: #cd512c;
+    --col-yellow: #efb247;
+    --col-black: #000000;
+    --col-black2: #1d2644;
+    --col-white: #ffffff;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 700;
+}
+
+p,
+a,
+span,
+li {
+    font-weight: 400;
+    font-size: 16px;
+    text-decoration: none;
+    list-style: none;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.3rem;
+}
+
+h3 {
+    font-size: 1.8rem;
+}
+
+h4 {
+    font-size: 1.4rem;
+}
+
+#dashboard-ctn {
+    padding-right: 1rem;
+}
+
+#kotak-on-dashboard-pr {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.kotak-child {
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 0 4px #000000;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.kotak-child-row1 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.kotak-child i {
+    font-size: 2rem;
+    color: #cd512c;
+}
+
+.kotak-child:nth-child(2) i {
+    color: #efb247;
+}
+
+.kotak-child:nth-child(3) i {
+    color: royalblue;
+}
+
+.kotak-child:nth-child(4) i {
+    color: olivedrab;
+}
+
+.kotak-child span {
+    font-size: 2rem;
+}
