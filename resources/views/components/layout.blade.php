@@ -1,4 +1,4 @@
-@props(['title', 'userLogined' => "session('userLogined')"])
+@props(['title'])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,9 +18,12 @@
     <!-- CUSTOM CSS -->
     @stack('styles')
 
+    <script src="https://unpkg.com/feather-icons"></script>
+
+
 </head>
 
-<body class="xyz-us-{{ session('userLogined') }}">
+<body class="xyz_us-{{ Auth::user()->id ?? '' }}">
 
     <div class="media-files-box">
         <div class="media-files-ctn">
@@ -53,6 +56,9 @@
 
     <!-- GLOBAL JS -->
     <script src=" {{asset('js/global.js')}}"></script>
+    <script>
+        feather.replace();
+    </script>
 
     <!-- CUSTOM JS -->
     @stack('scripts')

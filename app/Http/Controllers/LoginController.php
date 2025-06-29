@@ -6,20 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\MenuItem;
+use Carbon\Carbon;
+use App\Models\Order;
 
 class LoginController extends Controller
 {
-    public function index()
-    {
-
-        // Jika user sudah login
-        if (Auth::check()) {
-            return redirect('/dashboard');
-        }
-
-        // Jika user belum login
-        return view('login');
-    }
 
     public function authenticate(Request $request)
     {
@@ -34,25 +25,27 @@ class LoginController extends Controller
         }
 
         $credentials = $validator->validated();
-
-        // Cek apakah input adalah email atau username
         $loginField = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
 
-        // Coba autentikasi dengan field yang sesuai
-        if (Auth::attempt([$loginField => $credentials['login'], 'password' => $credentials['password']])) {
+        $loginAttempt = [
+            $loginField => $credentials['login'],
+            'password' => $credentials['password'],
+        ];
 
-
-
-            $userLogined = Auth::id();
+        if (Auth::attempt($loginAttempt)) {
             $request->session()->regenerate();
-            session(['userLogined' => $userLogined]);
 
-            return redirect()->intended('/dashboard');
+            $user = Auth::user();
+            return $user->role === 'admin'
+                ? redirect()->intended('/dashboard')
+                : redirect('/');
         }
 
-        // Jika gagal, kembalikan dengan error
         return back()->with('LoginError', 'Username or Password is Incorrect.');
     }
+
+
+
 
     public function logout(Request $request)
     {
@@ -62,19 +55,37 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/dominic');
+        return redirect('/');
     }
 
     public function checking()
     {
-        if (!Auth::check()) {
-            return redirect('/dominic');
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            return redirect('/');
         }
+
+        $today = Carbon::today();
+
+        $todayRevenue = Order::whereDate('created_at', $today)
+            ->where('status', 'paid')
+            ->sum('total_price');
+
+        $todayOrder = Order::whereDate('created_at', $today)->count();
+
+        $todayPending = Order::whereDate('created_at', $today)
+            ->where('status', 'pending')
+            ->count();
 
         $totalMenu = MenuItem::count();
 
+        $orders = Order::orderBy('created_at', 'desc')->get();
+
         return view('dashboard', [
-            'totalMenu' => $totalMenu
+            'totalMenu' => $totalMenu,
+            'todayRevenue' => $todayRevenue,
+            'todayOrder' => $todayOrder,
+            'todayPending' => $todayPending,
+            'orders' => $orders
         ]);
     }
 }

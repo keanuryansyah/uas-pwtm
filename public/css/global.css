@@ -58,10 +58,14 @@ h4 {
     width: 125px;
 }
 
-button,
 .button {
     cursor: pointer;
     font-family: "Roboto", sans-serif;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
 }
 
 .green-btn {

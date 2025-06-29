@@ -6,11 +6,16 @@ use App\Models\MenuItem;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProdukManagementController extends Controller
 {
     public function index()
     {
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            return redirect('/');
+        }
         $post = MenuItem::with('category')->latest()->get();
         $categories = Category::all();
         return view('menu-management', ['posts' => $post, 'categories' => $categories]);

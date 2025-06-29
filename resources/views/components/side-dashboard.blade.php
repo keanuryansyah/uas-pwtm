@@ -5,7 +5,7 @@
                 <div id="sdc-row1" class="sdc">
                     <a href="/">
                         <img src="{{asset('images/logo.png')}}" alt="">
-                        <span id="my-dashboard">Admin page</span>
+                        <span id="my-dashboard">Visit Site</span>
                     </a>
                 </div>
                 <div id="sdc-row2" class="sdc sdc-w-icon">
@@ -22,14 +22,6 @@
 
                                 <i class="fa-solid fa-utensils"></i>
                                 <span class="side-dash-btn" data-btn="produk-management">Menu Management</span>
-                            </a>
-                        </div>
-                        <div class="sdc-btn">
-
-                            <a href="/media-files">
-
-                                <i class="fa-solid fa-image"></i>
-                                <span class="side-dash-btn" data-btn="media-files">Media & Files</span>
                             </a>
                         </div>
                     </div>
