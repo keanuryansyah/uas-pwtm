@@ -57,13 +57,18 @@ class OrderController extends Controller
                 }
 
             case 'cancel':
-                // Simpan order status pending
-                $existingOrder = \App\Models\Order::where('id_user', $user->id)
+                // Cari order dengan status pending
+                $existingOrder = Order::where('id_user', $user->id)
                     ->where('status', 'pending')
                     ->first();
 
-                if (!$existingOrder) {
-                    $order = new \App\Models\Order();
+                if ($existingOrder) {
+                    // Update total_price dari TemporaryOrder yang terbaru
+                    $existingOrder->total_price = $totalPrice;
+                    $existingOrder->save();
+                } else {
+                    // Kalau belum ada, buat order baru dengan status pending
+                    $order = new Order();
                     $order->id_user = $user->id;
                     $order->nama_user = $user->name;
                     $order->total_price = $totalPrice;
@@ -72,6 +77,7 @@ class OrderController extends Controller
                 }
 
                 return response('success');
+
 
             default:
                 return response('invalid action', 400);
