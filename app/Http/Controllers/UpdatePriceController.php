@@ -78,8 +78,12 @@ class UpdatePriceController extends Controller
             ->first();
 
         if ($order) {
-            $order->total_price = $total;
-            $order->save();
+            if ($total == 0) {
+                $order->delete();
+            } else {
+                $order->total_price = $total;
+                $order->save();
+            }
         }
     }
 }
